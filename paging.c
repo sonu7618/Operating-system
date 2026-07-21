@@ -1,28 +1,13 @@
-/*=========================================================
-  File: task2_paging.c
-
-  Description:
-  This program simulates virtual memory paging using
-  FIFO and LRU page replacement algorithms.
-  It compares page faults and page hits for both methods.
-
-  Compile:
-      gcc task2_paging.c -o task2_paging
-
-  Run:
-      ./task2_paging
-==========================================================*/
-
 #include <stdio.h>
 
 #define NUM_FRAMES 4
 #define PAGE_SIZE_KB 4
 
-/* Page reference sequence */
+// Page reference sequence
 int pages[] = {1, 2, 3, 4, 1, 2, 5, 1, 2, 3, 4, 5};
 int total_pages = sizeof(pages) / sizeof(pages[0]);
 
-/* Display current frame contents */
+// Display current frame contents
 void displayFrames(int frames[])
 {
     printf("[ ");
@@ -36,7 +21,7 @@ void displayFrames(int frames[])
     printf("]");
 }
 
-/* FIFO Page Replacement */
+// FIFO Page Replacement
 void fifo()
 {
     int frames[NUM_FRAMES];
@@ -46,7 +31,7 @@ void fifo()
     for (int i = 0; i < NUM_FRAMES; i++)
         frames[i] = -1;
 
-    printf("\n========== FIFO PAGE REPLACEMENT ==========\n");
+    printf("\nFIFO Page Replacement\n");
     printf("Step\tPage\tResult\tFrames\n");
 
     for (int i = 0; i < total_pages; i++)
@@ -88,7 +73,7 @@ void fifo()
     printf("Fault Ratio      : %.2f%%\n", (faults * 100.0) / total_pages);
 }
 
-/* LRU Page Replacement */
+// LRU Page Replacement
 void lru()
 {
     int frames[NUM_FRAMES];
@@ -101,7 +86,7 @@ void lru()
         recent[i] = -1;
     }
 
-    printf("\n========== LRU PAGE REPLACEMENT ==========\n");
+    printf("\nLRU Page Replacement\n");
     printf("Step\tPage\tResult\tFrames\n");
 
     for (int i = 0; i < total_pages; i++)
@@ -130,7 +115,7 @@ void lru()
 
             int target = -1;
 
-            /* Check for empty frame */
+            // Check for empty frame
             for (int j = 0; j < NUM_FRAMES; j++)
             {
                 if (frames[j] == -1)
@@ -140,7 +125,7 @@ void lru()
                 }
             }
 
-            /* Replace least recently used page */
+            // Replace least recently used page
             if (target == -1)
             {
                 target = 0;
@@ -181,9 +166,8 @@ int main()
     fifo();
     lru();
 
-    printf("\n========== COMPARISON ==========\n");
-    printf("Both FIFO and LRU used the same reference string.\n");
-    printf("Compare the page hits and page faults above to see which performs better.\n");
+    printf("\nComparison\n");
+    printf("Check the page hits and page faults.\n");
 
     return 0;
 }
